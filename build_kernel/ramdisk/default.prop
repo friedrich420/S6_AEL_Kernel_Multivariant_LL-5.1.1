@@ -18,3 +18,8 @@ dalvik.vm.dex2oat-Xmx=512m
 dalvik.vm.image-dex2oat-Xms=64m
 dalvik.vm.image-dex2oat-Xmx=64m
 ro.dalvik.vm.native.bridge=0
+#for selinux permissive
+ro.securestorage.support=false
+androidboot.selinux=0
+#fix allshare
+wlan.wfd.hdcp=disable
