@@ -42,8 +42,8 @@ if [ ! -f /system/xbin/su ]; then
 	chmod 644 /system/lib64/libsupol.so
 	chmod 755 /system/etc/install-recovery.sh
 	chmod 644 /system/etc/.installed_su_daemon
-	chmod 777 /system/etc/init.d
-	chmod 777 /system/etc/init.d/*
+	chmod 755 /system/etc/init.d
+	chmod 755 /system/etc/init.d/*
 	chmod 644 /system/etc/init.sec.boot.sh
 	chmod 755 /system/app/SuperSU
 	chmod 644 /system/app/SuperSU/SuperSU.apk
@@ -54,4 +54,9 @@ if [ ! -f /system/xbin/su ]; then
 
 	/system/xbin/su --install
 fi
+
+#enforce init.d script perms on any post-root added files
+chmod 755 /system/etc/init.d
+chmod 755 /system/etc/init.d/*
+
 
