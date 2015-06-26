@@ -16,7 +16,7 @@ DTS=arch/arm64/boot/dts
 IMG=arch/arm64/boot
 DC=arch/arm64/configs
 BK=build_kernel
-OUT=../output
+OUT=output
 DT=G92X_universal.dtb
 
 # Cleanup old files from build environment
@@ -30,9 +30,9 @@ rm -rf $IMG/Image
 rm -rf $DTS/.*.tmp
 rm -rf $DTS/.*.cmd
 rm -rf $DTS/*.dtb
-rm -rf $OUT/skrn/*.img
-rm -rf $OUT/*.zip
-rm -rf $OUT/*.tar
+rm -rf $BK/$OUT/skrn/*.img
+rm -rf $BK/$OUT/*.zip
+rm -rf $BK/$OUT/*.tar
 rm -rf .config
 echo "Done"
 
@@ -122,20 +122,20 @@ echo -n "Make boot.img......................................"
 cd ..
 ./mkbootimg --base 0x10000000 --kernel Image --ramdisk_offset 0x01000000 --tags_offset 0x00000100 --pagesize 2048 --ramdisk ramdisk.cpio.gz --dt dt.img -o boot.img
 # copy the final boot.img's to output directory ready for zipping
-cp boot*.img ../$OUT/skrn/
+cp boot*.img $OUT/skrn/
 echo "Done"
 
 ######################################## ZIP GENERATION #######################################
 
 echo -n "Creating flashable zip............................."
-cd ../$OUT #move to output directory
-xterm -e zip -r custom_Kernel.zip *
+cd $OUT #move to output directory
+xterm -e zip -r custom_kernel.zip *
 echo "Done"
 
 ###################################### OPTIONAL SOURCE CLEAN ###################################
 
 echo
-cd ../ksource
+cd ../../
 read -p "Do you want to Clean the source? (y/n) > " mc
 if [ "$mc" = "Y" -o "$mc" = "y" ]; then
 	xterm -e make clean
@@ -144,7 +144,7 @@ fi
 
 ############################################# CLEANUP ##########################################
 
-cd ../ksource/$BK
+cd $BK
 rm -rf ramdisk.cpio.gz
 rm -rf Image*
 rm -rf boot*.img
