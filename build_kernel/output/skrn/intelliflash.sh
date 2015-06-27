@@ -54,6 +54,12 @@ elif [ "`grep "G920P" /proc/cmdline`" != "" ]; then
 elif [ "`grep "G925P" /proc/cmdline`" != "" ]; then
 	# found G925 P variant
 	D=P
+elif [ "`grep "G920R" /proc/cmdline`" != "" ]; then
+	# found G925 R variant
+	D=P
+elif [ "`grep "G925R" /proc/cmdline`" != "" ]; then
+	# found G925 R variant
+	D=P
 else
 	# must be an international variant, assume F
 	D=F
@@ -75,7 +81,7 @@ elif [ "$D" = "T" ]; then
 	fi		
 elif [ "$D" = "P" ]; then
 	#if a P device, exit now befroe doing anything else
-	found='-Found P (Sprint) Device..NOT SUPPORTED..exiting!'
+	found='-Found P / R Device..NOT SUPPORTED..exiting!'
 	echo "ui_print $found" >&$RUI;
 	exit 1
 fi
