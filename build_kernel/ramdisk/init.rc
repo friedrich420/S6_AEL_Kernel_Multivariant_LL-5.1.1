@@ -1272,12 +1272,11 @@ on property:sys.boot_completed=1
     chmod 0664 /sys/fs/selinux/enforce
     write /sys/fs/selinux/enforce 0
     #tweak vm
-    write /proc/sys/vm/vfs_cache_pressure 25
+    write /proc/sys/vm/vfs_cache_pressure 50
     write /proc/sys/vm/dirty_expire_centisecs 1000
     write /proc/sys/vm/dirty_writeback_centisecs 500
-    write /proc/sys/vm/min_free_kbytes 32768
-    write /proc/sys/vm/swappiness 160
-    write /sys/module/zswap/parameters/max_pool_percent 35
+    write /proc/sys/vm/swappiness 130
+    write /sys/module/zswap/parameters/max_pool_percent 20
 
 # icd
 on property:init.svc.media=restarting
