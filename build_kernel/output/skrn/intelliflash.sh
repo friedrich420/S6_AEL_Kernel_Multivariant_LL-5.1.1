@@ -105,34 +105,14 @@ dd if=/tmp/boot.img of=/dev/block/platform/15570000.ufs/by-name/BOOT
 sleep 1
 echo "ui_print $prop" >&$RUI;
 bp="/system/build.prop"
-sed -i "/ro.config.dha_cached_max/d" $bp
-sed -i "/ro.config.dha_empty_max/d" $bp
-sed -i "/ro.config.dha_th_rate/d" $bp
-if [ -f /system/build.prop.bakUK ]; then
-    rm -rf $bp
-    cp $bp.bakUK $bp
-else
-    cp $bp $bp.bakUK
-fi
-for mod in props;
-  do
-    for prop in `cat /tmp/$mod`;do
-      export newprop=$(echo ${prop} | cut -d '=' -f1)
-      sed -i "/${newprop}/d" /system/build.prop
-      echo $prop >> /system/build.prop
-    done
-done
-
-#add init.d support
-#sleep 1
-#echo "ui_print $initd" >&$RUI;
-#cp /tmp/init/init.sec.boot.sh /system/etc/init.sec.boot.sh
-#chmod 0755 system/etc/init.sec.boot.sh
-
-#force patch gps driver
-#sleep 1
-#echo "ui_print $patchgps" >&$RUI;
-#cp -r /tmp/sgps/* /system/
+sed -i "/ro.config.sdha/d" $bp
+sed -i "/ro.config.dha/d" $bp
+sed -i "/ro.config.ldha/d" $bp
+sed -i "/#UniKernel/d" $bp
+echo "#UniKernel" >> $bp
+echo "ro.config.dha_cached_min=4" >> $bp
+echo "ro.config.dha_empty_min=8" >> $bp
+echo "ro.config.dha_lmk_scale=1" >> $bp
 
 #fix permissions on newly copied files
 #sleep 1

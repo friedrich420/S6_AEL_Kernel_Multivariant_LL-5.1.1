@@ -1,9 +1,0 @@
-#Added_By_UniKernel
-#fix_WiFi
-ro.securestorage.support=false
-#dha
-ro.config.dha_cached_min=4
-ro.config.dha_empty_min=8
-ro.config.dha_lmk_scale=1
-
-
