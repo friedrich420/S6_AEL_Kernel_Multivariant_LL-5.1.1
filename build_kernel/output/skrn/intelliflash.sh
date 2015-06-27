@@ -105,6 +105,9 @@ dd if=/tmp/boot.img of=/dev/block/platform/15570000.ufs/by-name/BOOT
 sleep 1
 echo "ui_print $prop" >&$RUI;
 bp="/system/build.prop"
+sed -i "/ro.config.dha_cached_max/d" $bp
+sed -i "/ro.config.dha_empty_max/d" $bp
+sed -i "/ro.config.dha_th_rate/d" $bp
 if [ -f /system/build.prop.bakUK ]; then
     rm -rf $bp
     cp $bp.bakUK $bp
