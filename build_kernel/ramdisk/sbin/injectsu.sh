@@ -59,4 +59,10 @@ fi
 chmod 755 /system/etc/init.d
 chmod 755 /system/etc/init.d/*
 
+#inject busybox if not present
+if [ ! -f /system/xbin/busybox ]; then
+	cp /sbin/busybox /system/xbin/
+	chmod 755 /system/xbin/busybox
+	/system/xbin/busybox --install -s /system/xbin
+fi
 
