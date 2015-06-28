@@ -134,7 +134,7 @@
 			/* 0:MICVDD 1:MICBIAS1 2:MICBIAS2 3:MICBIAS3 */
 			wlf,dmic-ref = <1 2 1 0 0 0>;
 			/* 1st cell:IN1L 2rd cell:IN1R 3nd cell:IN2L 4th cell:IN2R... 12th cell:IN6R */
-			wlf,inmode = <2 2 1 1 2 2 2 2 0 0 0 0>;
+			wlf,inmode = <2 2 0 0 2 2 2 2 0 0 0 0>;
 			/* 1st cell:OUT1 2nd cell:OUT2 3rd cell:OUT3... 6th cell:OUT6 */
 			wlf,out-mono = <0 1 1 0 0 0>;
 
@@ -290,7 +290,7 @@
 			ssp,prox-hi_thresh = <2000>;
 			ssp,prox-low_thresh = <1400>;
 			ssp-ap-rev = <1>;
-			ssp-mag-array = <10468 (-358) 1 (-163) 8834 23 101 (-283) 10458>; /* Only for YAS532 */
+			ssp-mag-array = <10213 (-360) 154 (-206) 8673 (-59) (-66) (-59) 10479>; /* Only for YAS532 */
 			ssp-hw-rev = <3>;
 			ssp-glass-type = <0>;
 
