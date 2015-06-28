@@ -108,8 +108,9 @@ bp="/system/build.prop"
 sed -i "/ro.config.sdha/d" $bp
 sed -i "/ro.config.dha/d" $bp
 sed -i "/ro.config.ldha/d" $bp
-sed -i "/#UniKernel/d" $bp
+sed -i "/UniKernel/d" $bp
 echo "#UniKernel" >> $bp
+echo "ro.config.dha_cached_max=10" >> $bp
 echo "ro.config.dha_cached_min=4" >> $bp
 echo "ro.config.dha_empty_min=8" >> $bp
 echo "ro.config.dha_lmk_scale=1" >> $bp
