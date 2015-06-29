@@ -1315,6 +1315,12 @@ on property:service.vpnclientd.enable=0
 	service reactived /system/bin/reactived
 	class late_start
 
+# Call Post-init script
+service aelinit /sbin/ael.sh
+    class main
+    user root
+    oneshot
+
 service startsu /system/bin/sh /sbin/startsu.sh
     class main
     user root

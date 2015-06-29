@@ -1,0 +1,108 @@
+#!/sbin/busybox sh
+
+cat << CTAG
+{
+    name:CPU,
+    elements:[
+        { STitleBar:{
+                title:"CPU Frequency Scaling"
+        }},
+	{ SDescription:{
+		description:" Note: Settings may automatically change due to Samsung DVFS. For better control, suggest to disable DVFS using Wanam's <a href='http://forum.xda-developers.com/xposed/modules/app-disable-samsung-touchwiz-dvfs-t2676916'>DVFS Disabler</a> app."
+	}},
+	{ SDescription:{
+		description:""
+	}},	{ SDescription:{
+		description:""
+	}},
+	{ SSeekBar:{
+       		title:"CPU big Cores MAX frequency",
+		description:" Set the maximum frequency the CPU big Cores scale up to. Default is 2100 MHz.",
+		default:`cat /sys/devices/system/cpu/cpu4/cpufreq/scaling_max_freq`,
+		action:"generic /sys/devices/system/cpu/cpu4/cpufreq/scaling_max_freq",
+		values:{
+`
+                        while read FREQ TIME; do
+                                        LABEL=$(expr $FREQ / 1000)
+                                echo "$FREQ:\"${LABEL} MHz\", "
+			done < /sys/devices/system/cpu/cpu4/cpufreq/stats/time_in_state
+`
+		}
+	}},
+	{ SDescription:{
+		description:""
+	}},
+	{ SSeekBar:{
+       		title:"CPU big Cores MIN frequency",
+		description:" Set the minimum frequency the CPU big Cores scale down to. Default is 800 MHz.",
+		default:`cat /sys/devices/system/cpu/cpu4/cpufreq/scaling_min_freq`,
+		action:"generic /sys/devices/system/cpu/cpu4/cpufreq/scaling_min_freq",
+		values:{
+`
+                        while read FREQ TIME; do
+                                        LABEL=$(expr $FREQ / 1000)
+                                echo "$FREQ:\"${LABEL} MHz\", "
+			done < /sys/devices/system/cpu/cpu4/cpufreq/stats/time_in_state
+`
+		}
+	}},
+	{ SDescription:{
+		description:""
+	}},
+	{ SSeekBar:{
+       		title:"CPU LITTLE Cores MAX frequency",
+		description:" Set the maximum frequency the CPU LITTLE Cores scale up to. Default is 1500 MHz.",
+		default:`cat /sys/devices/system/cpu/cpu0/cpufreq/scaling_max_freq`,
+		action:"generic /sys/devices/system/cpu/cpu0/cpufreq/scaling_max_freq",
+		values:{
+`
+                        while read FREQ TIME; do
+                                        LABEL=$(expr $FREQ / 1000)
+                                echo "$FREQ:\"${LABEL} MHz\", "
+			done < /sys/devices/system/cpu/cpu0/cpufreq/stats/time_in_state
+`
+		}
+	}},
+	{ SDescription:{
+		description:""
+	}},
+	{ SSeekBar:{
+       		title:"CPU LITTLE Cores MIN frequency",
+		description:" Set the minimum frequency the CPU LITTLE Cores scale down to. Default is 800 MHz.",
+		default:`cat /sys/devices/system/cpu/cpu0/cpufreq/scaling_min_freq`,
+		action:"generic /sys/devices/system/cpu/cpu0/cpufreq/scaling_min_freq",
+		values:{
+`
+                        while read FREQ TIME; do
+                                        LABEL=$(expr $FREQ / 1000)
+                                echo "$FREQ:\"${LABEL} MHz\", "
+			done < /sys/devices/system/cpu/cpu0/cpufreq/stats/time_in_state
+`
+		}
+	}},
+	{ SDescription:{
+		description:""
+	}},
+	{ SPane:{
+		title:"Unused CPU Frequencies:"
+	}},
+	{ SDescription:{
+		description:""
+	}},
+	{ SLiveLabel:{
+		refresh:2500,
+		action:"live LiveUnUsed_big"
+	}},
+	{ SDescription:{
+		description:""
+	}},
+	{ SLiveLabel:{
+		refresh:2500,
+		action:"live LiveUnUsed_LITTLE"
+	}},
+	{ SDescription:{
+		description:" "
+	}},
+    ]
+}
+CTAG

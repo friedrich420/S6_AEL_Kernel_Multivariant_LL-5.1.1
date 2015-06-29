@@ -1,0 +1,173 @@
+#!/sbin/busybox sh
+
+cat << CTAG
+{
+    name:ADVANCED OPTIONS,
+    elements:[
+      	{ SPane:{
+		title:"Kernel Entropy"
+      	}},
+	{ SDescription:{
+		description:""
+	}},
+	{ SLiveLabel:{
+		title:"Entropy Available",
+		refresh:1000,
+		action:"live entropy"
+	}},
+	{ SSeekBar:{
+		title:"Read Wakeup Threshold",
+		max:2048, min:64, step:64,
+		default:`cat /proc/sys/kernel/random/read_wakeup_threshold`,
+		action:"generic /proc/sys/kernel/random/read_wakeup_threshold"
+	}},
+	{ SSeekBar:{
+		title:"Write Wakeup Threshold",
+		max:2048, min:64, step:64,
+		default:`cat /proc/sys/kernel/random/write_wakeup_threshold`,
+		action:"generic /proc/sys/kernel/random/write_wakeup_threshold"
+	}},
+	{ SPane:{
+		title:"KSM Control",
+		description:" Enabling Kernel SamePage Merging (KSM) will merge some memory to give a slight performance bump, but at the cost of small CPU power which could have an impact on battery life. Default is Disabled."
+	}},
+	{ SDescription:{
+		description:" "
+	}},
+	{ SCheckBox:{
+		label:"Enable or Disable KSM",
+		default:`cat /sys/kernel/mm/ksm/run`,
+		action:"generic /sys/kernel/mm/ksm/run"
+    	}},
+	{ SDescription:{
+		description:" "
+	}},
+	{ SSeekBar:{
+		title:"Pages to Scan",
+		description:" Default is 250.",
+		unit:" pages",
+		step:10,
+		min:0,
+		max:500,
+		default:`cat /sys/kernel/mm/ksm/pages_to_scan`,
+		action:"generic /sys/kernel/mm/ksm/pages_to_scan"
+	}},
+	{ SDescription:{
+		description:" "
+	}},
+	{ SSeekBar:{
+		title:"Scan Delay Interval",
+		description:" Default is 1500.",
+		unit:" ms",
+		step:10,
+		min:0,
+		max:1500,
+		default:`cat /sys/kernel/mm/ksm/sleep_millisecs`,
+		action:"generic /sys/kernel/mm/ksm/sleep_millisecs"
+	}},
+	{ SDescription:{
+		description:" "
+	}},
+	{ STitleBar:{
+		title:"Virtual Memory",
+		description:" Tune the operation of the VM subsystem of the Linux kernel and the writeout of dirty data to disk."
+	}},
+	{ SDescription:{
+		description:" "
+	}},
+	{ SSeekBar:{
+		title:"ZSwap memory pool",
+		description:" ZSwap memory pool percentage of main memory that may be used as compressed page cache. Default is 20.",
+		min:0, max:50, unit:" %", step:1,
+		default:`cat /sys/module/zswap/parameters/max_pool_percent`,
+                action:"generic /sys/module/zswap/parameters/max_pool_percent"
+	}},
+	{ SDescription:{
+		description:" "
+	}},
+    	{ SSeekBar:{
+        	title:"dirty_background_ratio",
+        	description:" Dirty background memory buffer, more you set, more memory will be used for write buffer for background operations, buffer is released on need to free RAM. The set value is a percentage of total system memory, the number of pages at which the pdflush background writeback daemon will start writing out dirty data. Default is 5.",
+        	min:0,
+		max:100, 
+		unit:" %", 
+		step:5,
+        	default:`cat /proc/sys/vm/dirty_background_ratio`,
+       		action:"generic /proc/sys/vm/dirty_background_ratio",
+    	}},
+	{ SDescription:{
+		description:" "
+	}},
+	{ SSeekBar:{
+        	title:"dirty_ratio",
+        	description:" Dirty real time memory buffer, more you set, more memory will be used for write buffer for real time operations, buffer is released on need to free RAM. The set value is a percentage of total system memory, the number of pages at which a process which is generating disk writes will itself start writing out dirty data. Default is 20.",
+        	min:0,
+		max:100,
+		unit:" %",
+		step:5,
+       	 	default:`cat /proc/sys/vm/dirty_ratio`,
+        	action:"generic /proc/sys/vm/dirty_ratio",
+    	}},
+	{ SDescription:{
+		description:" "
+	}},
+	{ SOptionList:{
+		title:"Laptop Mode (Auto FS Writeback Delay Mode)",
+		description:" This option will delay the writebacks of file system bits cached in RAM while screen is ON (Enable for better performance @ slight risk of possible data loss if crashed or sudden loss of power).",
+		default:`$BB cat /proc/sys/vm/laptop_mode`,
+		action:"generic /proc/sys/vm/laptop_mode",
+		values:{ 0:"Disabled", 1:"Enabled"
+		}
+	}},
+	{ SDescription:{
+		description:" "
+	}},
+	{ SSeekBar:{
+		title:"swappiness",
+		description:" A low value means the kernel will try to avoid swapping as much as possible where a higher value instead will make the kernel aggressively try to use swap space. Default is 130.",
+		max:200,
+		min:0,
+		step:10,
+		default:`cat /proc/sys/vm/swappiness`,
+		action:"generic /proc/sys/vm/swappiness",
+	}},
+	{ SDescription:{
+		description:" "
+	}},
+    	{ SSeekBar:{
+		title:"Adaptive vfs_cache_pressure on Suspend / Resume",
+		description:" Value used to control the tendency of the kernel to reclaim the memory which is used for caching of directory and inode objects. Low values save battery while idle, but may cause stutter with longer up times. Default: screen is ON is 100 & screen OFF is fixed at 20.",
+		unit:" %",
+		step:1,
+		min:0,
+		max:150,
+		default:`cat /proc/sys/vm/vfs_cache_pressure`,
+		action:"generic /proc/sys/vm/vfs_cache_pressure"
+    	}},
+	{ SDescription:{
+		description:" "
+	}},
+	{ SPane:{
+		title:"panic",
+		description:" Set to zero to have the kernel loop on a panic or auto-reboot after this number of seconds. Default is 1.",
+	}},
+	{ SSeekBar:{
+		max:30,
+		min:0,
+		step:1,
+		unit:" s",
+		default:`cat /proc/sys/kernel/panic`,
+		action:"generic /proc/sys/kernel/panic",
+	}},
+	{ SPane:{
+		title:"panic_on_oops",
+		description:" Disable to have the kernel continue operations after a software failure. Default is Enabled.",
+	}},
+	{ SCheckBox:{
+		label:"Enable or Disable panic_on_oops",
+		default:`cat /proc/sys/kernel/panic_on_oops`,
+		action:"generic /proc/sys/kernel/panic_on_oops",
+        }},
+    ]
+}
+CTAG
